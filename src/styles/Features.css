@@ -1,0 +1,40 @@
+.features {
+    padding: 8rem 0;
+    background: white;
+  }
+  
+  .feature-card {
+    background: #fff;
+    padding: 3rem 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-icon {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+  }
+  
+  .feature-card h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--dark-color);
+  }
+  
+  .feature-card p {
+    font-size: 1.6rem;
+    color: #666;
+  }
+  
+  @media (max-width: 992px) {
+    .features {
+      padding: 6rem 0;
+    }
+  }
