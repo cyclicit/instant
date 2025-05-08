@@ -4,9 +4,10 @@ import {
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword 
 } from "firebase/auth";
-import { auth, db } from '../firebase';
+import { auth, db, signInWithGoogle } from '../firebase';
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
+import { FaGoogle } from 'react-icons/fa';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -43,6 +44,19 @@ const Login = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setError('');
+    setIsLoading(true);
+    try {
+      await signInWithGoogle();
+      navigate('/dashboard');
+    } catch (err) {
+      setError(getAuthErrorMessage(err.code));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const getAuthErrorMessage = (code) => {
     switch (code) {
       case 'auth/invalid-email':
@@ -59,6 +73,10 @@ const Login = () => {
         return 'Password should be at least 6 characters';
       case 'auth/operation-not-allowed':
         return 'Email/password accounts are not enabled';
+      case 'auth/popup-closed-by-user':
+        return 'Google sign in was cancelled';
+      case 'auth/account-exists-with-different-credential':
+        return 'Account already exists with different credential';
       case 'Phone number is required':
         return 'Phone number is required';
       default:
@@ -151,8 +169,13 @@ const Login = () => {
           <div className="social-login">
             <p>Or continue with</p>
             <div className="social-icons">
-              <button type="button" className="social-btn google">
-                <i className="fab fa-google"></i> Google
+              <button 
+                type="button" 
+                className="social-btn google"
+                onClick={handleGoogleSignIn}
+                disabled={isLoading}
+              >
+                <FaGoogle className="google-icon" /> Google
               </button>
             </div>
           </div>
