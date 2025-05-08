@@ -111,6 +111,7 @@ const Header = ({ user }) => {
           <nav className={`nav ${isOpen ? 'open' : ''}`} onClick={(e) => e.stopPropagation()}>
             <ul>
               <li><Link href="/" onClick={handleLogoClick}>Home</Link></li>
+              <li><Link to="/products" onClick={() => setIsOpen(false)}>Products</Link></li>
               
               {user ? (
                 <>

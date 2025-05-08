@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { auth, db, signInWithGoogle } from '../firebase';
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 
 const Login = () => {
@@ -18,6 +18,7 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +37,18 @@ const Login = () => {
           lastLogin: new Date()
         });
       }
-      navigate('/dashboard'); // Redirect to dashboard after login
+      
+      // Redirect logic - check if we came from products page with intended product
+      if (location.state?.from === '/products' && location.state?.intendedProduct) {
+        navigate('/products', { 
+          state: { 
+            showProductModal: true,
+            productId: location.state.intendedProduct 
+          } 
+        });
+      } else {
+        navigate('/dashboard'); // Default redirect
+      }
     } catch (err) {
       setError(getAuthErrorMessage(err.code));
     } finally {
@@ -49,7 +61,18 @@ const Login = () => {
     setIsLoading(true);
     try {
       await signInWithGoogle();
-      navigate('/dashboard');
+      
+      // Same redirect logic for Google sign-in
+      if (location.state?.from === '/products' && location.state?.intendedProduct) {
+        navigate('/products', { 
+          state: { 
+            showProductModal: true,
+            productId: location.state.intendedProduct 
+          } 
+        });
+      } else {
+        navigate('/dashboard');
+      }
     } catch (err) {
       setError(getAuthErrorMessage(err.code));
     } finally {
