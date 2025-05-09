@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../firebase';
 import '../styles/Products.css';
+import ProductList from './ProductList';
 
 const Products = () => {
   const navigate = useNavigate();
@@ -202,6 +203,9 @@ const Products = () => {
           </div>
         </div>
       )}
+      <div>
+        <ProductList />
+      </div>
     </div>
   );
 };
