@@ -17,9 +17,7 @@ const Hero = () => {
               <a href="#features" className="btn btn-secondary">Learn More</a>
             </div>
           </div>
-          <div className="hero-image">
-            <img src="https://via.placeholder.com/600x400" alt="Hero Illustration" />
-          </div>
+          
         </div>
       </div>
     </section>
