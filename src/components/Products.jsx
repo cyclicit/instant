@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../firebase';
 import '../styles/Products.css';
-import ProductList from './ProductList';
 
-const Products = () => {
+const Products = ({ addToCart }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -20,7 +19,7 @@ const Products = () => {
         if (product) {
           setSelectedProduct(product);
           setShowModal(true);
-          setIntendedProductId(null); // Clear the intended product
+          setIntendedProductId(null);
         }
       }
     };
@@ -32,7 +31,6 @@ const Products = () => {
   useEffect(() => {
     if (location.state?.intendedProduct) {
       setIntendedProductId(location.state.intendedProduct);
-      // Clear the navigation state to prevent reopening on refresh
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, [location, navigate]);
@@ -82,7 +80,6 @@ const Products = () => {
 
   const handleViewDetails = (productId) => {
     if (!isLoggedIn) {
-      // Store the intended product ID and redirect to login
       navigate('/login', { 
         state: { 
           intendedProduct: productId,
@@ -92,7 +89,6 @@ const Products = () => {
       return;
     }
     
-    // If already logged in, show the modal directly
     const product = demoProducts.find(p => p.id === productId);
     setSelectedProduct(product);
     setShowModal(true);
@@ -103,11 +99,23 @@ const Products = () => {
     setSelectedProduct(null);
   };
 
-  const handlePayment = (planName) => {
-    // Here you would integrate with your payment processor
-    console.log(`Initiating payment for ${selectedProduct.name} - ${planName}`);
-    alert(`Redirecting to payment for ${planName} plan`);
-    // In a real app, you would redirect to payment gateway or show payment form
+  const handleAddToCart = (planName) => {
+    if (!isLoggedIn) {
+      navigate('/login', { 
+        state: { 
+          intendedProduct: selectedProduct.id,
+          from: '/products'
+        } 
+      });
+      return;
+    }
+
+    const plan = selectedProduct.pricingOptions.find(p => p.name === planName);
+    addToCart(selectedProduct, plan);
+    setShowModal(false);
+    
+    // Optional: Show a success message or notification
+    alert(`${selectedProduct.name} (${planName} Plan) added to cart!`);
   };
 
   return (
@@ -191,9 +199,9 @@ const Products = () => {
                       </ul>
                       <button 
                         className="buy-button"
-                        onClick={() => handlePayment(option.name)}
+                        onClick={() => handleAddToCart(option.name)}
                       >
-                        Select Plan
+                        Add to Cart
                       </button>
                     </div>
                   ))}
@@ -203,9 +211,6 @@ const Products = () => {
           </div>
         </div>
       )}
-      <div>
-        <ProductList />
-      </div>
     </div>
   );
 };

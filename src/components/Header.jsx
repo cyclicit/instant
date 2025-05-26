@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import '../styles/Header.css';
 
-const Header = ({ user }) => {
+const Header = ({ user, cartItemCount }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -61,10 +61,8 @@ const Header = ({ user }) => {
     setIsProfileOpen(false);
     
     if (location.pathname === '/') {
-      // Force refresh if already on home page
       window.location.href = '/';
     } else {
-      // Normal navigation if not on home page
       navigate('/');
     }
   };
@@ -75,7 +73,6 @@ const Header = ({ user }) => {
     return 'User';
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = () => {
       if (isProfileOpen) {
@@ -112,6 +109,16 @@ const Header = ({ user }) => {
             <ul>
               <li><Link href="/" onClick={handleLogoClick}>Home</Link></li>
               <li><Link to="/products" onClick={() => setIsOpen(false)}>Products</Link></li>
+              
+              {/* Cart Link - Visible to all users */}
+              <li className="cart-link-container">
+                <Link to="/cart" onClick={() => setIsOpen(false)} className="cart-link">
+                  <span className="cart-icon">🛒</span>
+                  {cartItemCount > 0 && (
+                    <span className="cart-count">{cartItemCount}</span>
+                  )}
+                </Link>
+              </li>
               
               {user ? (
                 <>
@@ -156,11 +163,6 @@ const Header = ({ user }) => {
 };
 
 export default Header;
-
-
-
-
-
 
 
 
