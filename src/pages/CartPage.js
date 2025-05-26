@@ -69,22 +69,41 @@ const CartPage = ({ cartItems, removeFromCart, updateQuantity, clearCart, user }
         orderId: `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`
       };
 
-      // Get existing orders
+      // Submit to Formspree
+      const formspreeResponse = await fetch('https://formspree.io/f/mgvkjqjk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: `New Order #${order.orderId} from ${formData.name}`,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.mobile,
+          address: formData.address,
+          paymentMethod: formData.paymentMethod,
+          transactionId: formData.transactionId,
+          orderId: order.orderId,
+          total: order.total.toFixed(2),
+          items: order.items.map(item => ({
+            name: item.name,
+            plan: item.plan,
+            quantity: item.quantity,
+            price: item.price,
+            subtotal: (item.price * item.quantity).toFixed(2)
+          })),
+          _replyto: formData.email,
+          _format: "plain"
+        }),
+      });
+
+      // Continue with local storage even if Formspree fails
       const existingOrders = JSON.parse(localStorage.getItem('orderHistory') || '[]');
-      
-      // Add new order to beginning of array
       const updatedOrders = [order, ...existingOrders];
-      
-      // Save to localStorage
       localStorage.setItem('orderHistory', JSON.stringify(updatedOrders));
-      
-      // Update state
       setOrderHistory(prev => [order, ...prev]);
-      
-      // Clear cart
       clearCart();
       
-      // Reset form
       setFormData({
         name: user?.displayName || '',
         email: user?.email || '',
@@ -94,13 +113,10 @@ const CartPage = ({ cartItems, removeFromCart, updateQuantity, clearCart, user }
         transactionId: ''
       });
       
-      // Close modal
       setIsModalOpen(false);
-      
-      // Show success message
       alert(`Order #${order.orderId} placed successfully!`);
     } catch (error) {
-      console.error('Error saving order:', error);
+      console.error('Error processing order:', error);
       alert('There was an error processing your order. Please try again.');
     } finally {
       setIsProcessing(false);
@@ -116,7 +132,7 @@ const CartPage = ({ cartItems, removeFromCart, updateQuantity, clearCart, user }
     <div className="cart-container">
       <h1>Your Shopping Cart</h1>
 
-      {/* Order History Section - Always visible when there are orders */}
+      {/* Order History Section */}
       {orderHistory.length > 0 && (
         <div className="order-history-section">
           <div 
@@ -255,6 +271,9 @@ const CartPage = ({ cartItems, removeFromCart, updateQuantity, clearCart, user }
             <p className="order-total">Total: ${calculateTotal().toFixed(2)}</p>
             
             <form onSubmit={handleSubmitOrder}>
+              {/* Honeypot spam protection */}
+              <input type="text" name="_gotcha" style={{display: 'none'}} />
+              
               <div className="form-group">
                 <label>Full Name *</label>
                 <input
@@ -306,7 +325,7 @@ const CartPage = ({ cartItems, removeFromCart, updateQuantity, clearCart, user }
                   onChange={handleInputChange}
                   required
                 >
-                  <option value="bkash">bKash/Nagad</option>
+                  <option value="bkash">bKash/Nagad-01577148188</option>
                   <option value="card">Credit/Debit Card</option>
                   <option value="cash">Cash on Delivery</option>
                 </select>
