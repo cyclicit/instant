@@ -6,158 +6,224 @@ import '../styles/Products.css';
 const Products = ({ addToCart }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedLawyer, setSelectedLawyer] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [intendedProductId, setIntendedProductId] = useState(null);
+  const [intendedLawyerId, setIntendedLawyerId] = useState(null);
   const isLoggedIn = auth.currentUser !== null;
 
-  // Check for intended product after authentication
+  // Check for intended lawyer after authentication
   useEffect(() => {
     const checkAuthAndOpenModal = () => {
-      if (isLoggedIn && intendedProductId) {
-        const product = demoProducts.find(p => p.id === intendedProductId);
-        if (product) {
-          setSelectedProduct(product);
+      if (isLoggedIn && intendedLawyerId) {
+        const lawyer = lawyers.find(l => l.id === intendedLawyerId);
+        if (lawyer) {
+          setSelectedLawyer(lawyer);
           setShowModal(true);
-          setIntendedProductId(null);
+          setIntendedLawyerId(null);
         }
       }
     };
 
     checkAuthAndOpenModal();
-  }, [isLoggedIn, intendedProductId]);
+  }, [isLoggedIn, intendedLawyerId]);
 
-  // Handle login redirect with product ID
+  // Handle login redirect with lawyer ID
   useEffect(() => {
-    if (location.state?.intendedProduct) {
-      setIntendedProductId(location.state.intendedProduct);
+    if (location.state?.intendedLawyer) {
+      setIntendedLawyerId(location.state.intendedLawyer);
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, [location, navigate]);
 
-  const demoProducts = [
+  const lawyers = [
     {
-      id: 1,
-      name: 'E-Commerce Platform',
-      description: 'A fully responsive online store with cart functionality',
-      image: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-      features: ['Product catalog', 'Shopping cart', 'Payment integration'],
-      demoUrl: 'https://ecommerce-demo.yoursite.com',
-      price: 299,
-      pricingOptions: [
-        { name: 'Basic', price: 99, features: ['Basic features', 'Email support'] },
-        { name: 'Standard', price: 199, features: ['All basic features', 'Priority support'] },
-        { name: 'Premium', price: 299, features: ['All features', '24/7 support', 'Customizations'] }
+      "id": 1,
+      "name": "Sharmin Ahmed",
+      "specialty": "Corporate Law",
+      "description": "Expert in mergers & acquisitions with 15 years of experience",
+      "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "experience": "15 years",
+      "rating": 4.9,
+      "languages": ["English", "French"],
+      "consultationUrl": "https://calendly.com/sharmin-ahmed",
+      "price": 350,
+      "pricingOptions": [
+        { "name": "Initial Consultation", "price": 150, "duration": "30 min" },
+        { "name": "Standard Consultation", "price": 350, "duration": "1 hour" },
+        { "name": "Extended Consultation", "price": 600, "duration": "2 hours" }
       ]
     },
     {
-      id: 2,
-      name: 'Social Media Dashboard',
-      description: 'Analytics dashboard for social media metrics',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-      features: ['Engagement analytics', 'Post scheduling', 'Audience insights'],
-      demoUrl: 'https://social-demo.yoursite.com',
-      price: 199,
-      pricingOptions: [
-        { name: 'Basic', price: 99, features: ['Basic analytics'] },
-        { name: 'Pro', price: 199, features: ['Advanced analytics', 'Team access'] }
+      "id": 2,
+      "name": "Arif Rahman",
+      "specialty": "Intellectual Property",
+      "description": "Patent and trademark specialist protecting your innovations",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "experience": "12 years",
+      "rating": 4.8,
+      "languages": ["English", "Bengali"],
+      "consultationUrl": "https://calendly.com/arif-rahman",
+      "price": 300,
+      "pricingOptions": [
+        { "name": "Initial Consultation", "price": 100, "duration": "30 min" },
+        { "name": "IP Strategy Session", "price": 300, "duration": "1 hour" },
+        { "name": "Comprehensive Review", "price": 500, "duration": "2 hours" }
       ]
     },
     {
-      id: 3,
-      name: 'Project Management Tool',
-      description: 'Collaborative workspace for team projects',
-      image: 'https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-      features: ['Task management', 'Team collaboration', 'Progress tracking'],
-      demoUrl: 'https://projects-demo.yoursite.com',
-      price: 249,
-      pricingOptions: [
-        { name: 'Starter', price: 99, features: ['Up to 5 users'] },
-        { name: 'Business', price: 249, features: ['Unlimited users', 'Advanced reporting'] }
+      "id": 3,
+      "name": "Nazmul Hossain",
+      "specialty": "Criminal Defense",
+      "description": "Former prosecutor with exceptional trial experience",
+      "image": "https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "experience": "18 years",
+      "rating": 4.9,
+      "languages": ["English", "Bengali"],
+      "consultationUrl": "https://calendly.com/nazmul-hossain",
+      "price": 400,
+      "pricingOptions": [
+        { "name": "Case Evaluation", "price": 200, "duration": "30 min" },
+        { "name": "Defense Strategy", "price": 400, "duration": "1 hour" },
+        { "name": "Trial Preparation", "price": 750, "duration": "2 hours" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Tasnim Khan",
+      "specialty": "Family Law",
+      "description": "Compassionate guidance through divorce and custody matters",
+      "image": "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "experience": "10 years",
+      "rating": 4.7,
+      "languages": ["English", "Bengali"],
+      "consultationUrl": "https://calendly.com/tasnim-khan",
+      "price": 275,
+      "pricingOptions": [
+        { "name": "Initial Meeting", "price": 125, "duration": "30 min" },
+        { "name": "Case Consultation", "price": 275, "duration": "1 hour" },
+        { "name": "Comprehensive Planning", "price": 450, "duration": "2 hours" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Rafiqul Islam",
+      "specialty": "Real Estate Law",
+      "description": "Commercial and residential real estate transactions expert",
+      "image": "https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "experience": "14 years",
+      "rating": 4.8,
+      "languages": ["English", "Bengali"],
+      "consultationUrl": "https://calendly.com/rafiqul-islam",
+      "price": 325,
+      "pricingOptions": [
+        { "name": "Initial Review", "price": 150, "duration": "30 min" },
+        { "name": "Contract Consultation", "price": 325, "duration": "1 hour" },
+        { "name": "Transaction Package", "price": 550, "duration": "2 hours" }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Farida Akter",
+      "specialty": "Immigration Law",
+      "description": "Helping individuals and businesses navigate complex immigration processes",
+      "image": "https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      "experience": "9 years",
+      "rating": 4.9,
+      "languages": ["English", "Bengali", "Arabic"],
+      "consultationUrl": "https://calendly.com/farida-akter",
+      "price": 250,
+      "pricingOptions": [
+        { "name": "Initial Assessment", "price": 100, "duration": "30 min" },
+        { "name": "Case Strategy", "price": 250, "duration": "1 hour" },
+        { "name": "Full Application Review", "price": 400, "duration": "2 hours" }
       ]
     }
   ];
 
-  const handleViewDetails = (productId) => {
+  const handleViewDetails = (lawyerId) => {
     if (!isLoggedIn) {
       navigate('/login', { 
         state: { 
-          intendedProduct: productId,
+          intendedLawyer: lawyerId,
           from: '/products'
         } 
       });
       return;
     }
     
-    const product = demoProducts.find(p => p.id === productId);
-    setSelectedProduct(product);
+    const lawyer = lawyers.find(l => l.id === lawyerId);
+    setSelectedLawyer(lawyer);
     setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
-    setSelectedProduct(null);
+    setSelectedLawyer(null);
   };
 
   const handleAddToCart = (planName) => {
     if (!isLoggedIn) {
       navigate('/login', { 
         state: { 
-          intendedProduct: selectedProduct.id,
+          intendedLawyer: selectedLawyer.id,
           from: '/products'
         } 
       });
       return;
     }
 
-    const plan = selectedProduct.pricingOptions.find(p => p.name === planName);
-    addToCart(selectedProduct, plan);
+    const plan = selectedLawyer.pricingOptions.find(p => p.name === planName);
+    addToCart(selectedLawyer, plan);
     setShowModal(false);
     
     // Optional: Show a success message or notification
-    alert(`${selectedProduct.name} (${planName} Plan) added to cart!`);
+    alert(`Consultation with ${selectedLawyer.name} (${planName}) booked!`);
   };
 
   return (
     <div className="products-container">
-      <h1 className="products-title">Our Product Demos</h1>
-      <p className="products-subtitle">Explore our featured website templates</p>
+      <h1 className="products-title">Our Legal Experts</h1>
+      <p className="products-subtitle">Book consultations with top-rated attorneys</p>
       
       <div className="products-grid">
-        {demoProducts.map((product) => (
-          <div key={product.id} className="product-card">
+        {lawyers.map((lawyer) => (
+          <div key={lawyer.id} className="product-card">
             <div className="product-image-container">
               <img 
-                src={product.image} 
-                alt={product.name} 
+                src={lawyer.image} 
+                alt={lawyer.name} 
                 className="product-image"
               />
+              <div className="lawyer-rating">
+                ⭐ {lawyer.rating} ({lawyer.experience} experience)
+              </div>
             </div>
             <div className="product-content">
-              <h3 className="product-name">{product.name}</h3>
-              <p className="product-description">{product.description}</p>
+              <h3 className="product-name">{lawyer.name}</h3>
+              <p className="lawyer-specialty">{lawyer.specialty}</p>
+              <p className="product-description">{lawyer.description}</p>
               
               <div className="product-features">
-                <h4>Key Features:</h4>
+                <h4>Details:</h4>
                 <ul>
-                  {product.features.map((feature, index) => (
-                    <li key={index}>{feature}</li>
-                  ))}
+                  <li>Experience: {lawyer.experience}</li>
+                  <li>Languages: {lawyer.languages.join(", ")}</li>
+                  <li>Starting at: ${lawyer.pricingOptions[0].price}</li>
                 </ul>
               </div>
               
               <div className="product-actions">
                 <button 
                   className="demo-button"
-                  onClick={() => window.open(product.demoUrl, '_blank')}
+                  onClick={() => window.open(lawyer.consultationUrl, '_blank')}
                 >
-                  Live Demo
+                  View Calendar
                 </button>
                 <button 
                   className="details-button"
-                  onClick={() => handleViewDetails(product.id)}
+                  onClick={() => handleViewDetails(lawyer.id)}
                 >
-                  View Details
+                  Book Consultation
                 </button>
               </div>
             </div>
@@ -165,43 +231,53 @@ const Products = ({ addToCart }) => {
         ))}
       </div>
 
-      {/* Product Details Modal */}
-      {showModal && selectedProduct && (
+      {/* Lawyer Details Modal */}
+      {showModal && selectedLawyer && (
         <div className="modal-overlay">
           <div className="modal-content">
             <button className="modal-close" onClick={closeModal}>×</button>
             
             <div className="modal-header">
-              <h2>{selectedProduct.name}</h2>
-              <p>{selectedProduct.description}</p>
+              <h2>{selectedLawyer.name}</h2>
+              <p className="lawyer-specialty">{selectedLawyer.specialty}</p>
+              <p>{selectedLawyer.description}</p>
+              <div className="lawyer-meta">
+                <span>⭐ {selectedLawyer.rating} Rating</span>
+                <span>📅 {selectedLawyer.experience} Experience</span>
+                <span>🗣️ Speaks: {selectedLawyer.languages.join(", ")}</span>
+              </div>
             </div>
             
             <div className="modal-body">
               <div className="modal-image-container">
                 <img 
-                  src={selectedProduct.image} 
-                  alt={selectedProduct.name} 
+                  src={selectedLawyer.image} 
+                  alt={selectedLawyer.name} 
                   className="modal-image"
                 />
+                <a 
+                  href={selectedLawyer.consultationUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="calendar-link"
+                >
+                  View Full Availability
+                </a>
               </div>
               
               <div className="modal-details">
-                <h3>Pricing Options</h3>
+                <h3>Consultation Options</h3>
                 <div className="pricing-options">
-                  {selectedProduct.pricingOptions.map((option, index) => (
+                  {selectedLawyer.pricingOptions.map((option, index) => (
                     <div key={index} className="pricing-card">
                       <h4>{option.name}</h4>
                       <div className="price">${option.price}</div>
-                      <ul className="plan-features">
-                        {option.features.map((feature, i) => (
-                          <li key={i}>{feature}</li>
-                        ))}
-                      </ul>
+                      <div className="duration">{option.duration}</div>
                       <button 
                         className="buy-button"
                         onClick={() => handleAddToCart(option.name)}
                       >
-                        Add to Cart
+                        Book Now
                       </button>
                     </div>
                   ))}

@@ -4,46 +4,61 @@ import '../styles/Features.css';
 const Features = () => {
   const features = [
     {
-      icon: '🚀',
-      title: 'Fast Performance',
-      description: 'Optimized for speed and efficiency to deliver the best user experience.'
+      icon: '⚖️',
+      title: 'Expert Lawyers',
+      description: 'Connect with verified legal professionals across all specialties in Bangladesh.'
     },
     {
-      icon: '🛠️',
-      title: 'Easy to Use',
-      description: 'Intuitive interface that makes it simple for anyone to get started.'
+      icon: '⭐',
+      title: 'Client Ratings',
+      description: 'Read genuine reviews and ratings from previous clients to make informed choices.'
     },
     {
-      icon: '📱',
-      title: 'Fully Responsive',
-      description: 'Looks great on any device, from desktop to mobile phones.'
+      icon: '📅',
+      title: 'Easy Booking',
+      description: 'Simple appointment scheduling system with instant confirmation.'
+    },
+    {
+      icon: '💰',
+      title: 'Transparent Pricing',
+      description: 'Clear fee structures with no hidden charges for legal services.'
     },
     {
       icon: '🔒',
-      title: 'Secure',
-      description: 'Built with security in mind to protect your data.'
+      title: 'Confidential Consultations',
+      description: 'Secure platform that protects your privacy and case details.'
+    },
+    {
+      icon: '📱',
+      title: '24/7 Availability',
+      description: 'Access lawyer profiles and book consultations anytime, anywhere.'
+    },
+    {
+      icon: '🏛️',
+      title: 'Court Specialists',
+      description: 'Find lawyers with specific court experience and success rates.'
+    },
+    {
+      icon: '📝',
+      title: 'Document Review',
+      description: 'Get professional review of your legal documents before submission.'
     },
     {
       icon: '🔄',
-      title: 'Regular Updates',
-      description: 'We constantly improve our product with new features.'
-    },
-    {
-      icon: '📊',
-      title: 'Analytics',
-      description: 'Get insights into how your users interact with your product.'
+      title: 'Case Tracking',
+      description: 'Monitor your case progress through our platform.'
     }
   ];
 
   return (
     <section className="features" id="features">
       <div className="container">
-        <h2 className="section-title">Amazing Features</h2>
+        <h2 className="section-title">Why Choose Our Platform</h2>
         <p className="section-subtitle">
-          Our platform comes packed with all the features you need to succeed in the digital world.
+          We provide the most comprehensive legal service platform in Bangladesh with features designed for your convenience.
         </p>
         
-        <div className="grid grid-3">
+        <div className="features-grid">
           {features.map((feature, index) => (
             <div className="feature-card" key={index}>
               <div className="feature-icon">{feature.icon}</div>

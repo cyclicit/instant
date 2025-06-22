@@ -92,7 +92,7 @@ const Header = ({ user, cartItemCount }) => {
       <div className="container">
         <div className="header-content">
           <div className="logo">
-            <a href="/" onClick={handleLogoClick}>BrandName</a>
+            <a href="/" onClick={handleLogoClick}>Lawyers Counsultation</a>
           </div>
           
           <button 
@@ -108,7 +108,7 @@ const Header = ({ user, cartItemCount }) => {
           <nav className={`nav ${isOpen ? 'open' : ''}`} onClick={(e) => e.stopPropagation()}>
             <ul>
               <li><Link href="/" onClick={handleLogoClick}>Home</Link></li>
-              <li><Link to="/products" onClick={() => setIsOpen(false)}>Products</Link></li>
+              <li><Link to="/products" onClick={() => setIsOpen(false)}>Our Lawyers</Link></li>
               
               {/* Cart Link - Visible to all users */}
               <li className="cart-link-container">

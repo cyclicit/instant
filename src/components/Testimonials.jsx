@@ -4,47 +4,75 @@ import '../styles/Testimonials.css';
 const Testimonials = () => {
   const testimonials = [
     {
-      name: 'Sarah Johnson',
-      role: 'Marketing Director',
-      company: 'Acme Inc',
-      content: 'This platform has transformed how we engage with our customers. The results have been phenomenal!',
-      avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
+      name: 'Fatema Begum',
+      role: 'Business Owner',
+      location: 'Dhaka',
+      content: 'Advocate Rahman helped me win a complex property dispute case that had been dragging for years. His expertise in land laws is unmatched!',
+      avatar: 'https://i.ibb.co/4W2yXzP/bangladeshi-woman1.jpg',
+      rating: 5
     },
     {
-      name: 'Michael Chen',
-      role: 'CTO',
-      company: 'TechStart',
-      content: 'The ease of use and powerful features make this our go-to solution for all our digital needs.',
-      avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
+      name: 'Md. Jamal Uddin',
+      role: 'Corporate Executive',
+      location: 'Chittagong',
+      content: 'The divorce consultation I received was compassionate yet legally thorough. Barrister Akhter handled my sensitive case with professionalism.',
+      avatar: 'https://i.ibb.co/0jq7R0J/bangladeshi-man1.jpg',
+      rating: 4
     },
     {
-      name: 'David Wilson',
-      role: 'Product Manager',
-      company: 'InnovateCo',
-      content: 'We saw a 40% increase in user engagement after switching to this platform. Highly recommended!',
-      avatar: 'https://randomuser.me/api/portraits/men/75.jpg'
+      name: 'Nusrat Jahan',
+      role: 'University Student',
+      location: 'Sylhet',
+      content: 'I was falsely accused in a cyber crime case. Lawyer Tasnim fought for my innocence and got the charges dismissed. Forever grateful!',
+      avatar: 'https://i.ibb.co/7Q3Yh0N/bangladeshi-woman2.jpg',
+      rating: 5
+    },
+    {
+      name: 'Rahim Khan',
+      role: 'Expatriate',
+      location: 'Comilla',
+      content: 'From the UK, I needed help with inheritance laws. The video consultation was seamless and the advice saved me thousands.',
+      avatar: 'https://i.ibb.co/3R4K3b0/bangladeshi-man2.jpg',
+      rating: 5
     }
   ];
+
+  // Function to render star ratings
+  const renderStars = (rating) => {
+    return (
+      <div className="rating-stars">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className={i < rating ? "star filled" : "star"}>★</span>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <section className="testimonials" id="testimonials">
       <div className="container">
-        <h2 className="section-title">What Our Clients Say</h2>
+        <h2 className="section-title">Client Success Stories</h2>
         <p className="section-subtitle">
-          Don't just take our word for it. Here's what our clients have to say about our platform.
+          Hear from Bangladeshis who found legal solutions through our platform
         </p>
         
-        <div className="grid grid-3">
+        <div className="testimonials-grid">
           {testimonials.map((testimonial, index) => (
             <div className="testimonial-card" key={index}>
               <div className="testimonial-content">
-                <p>"{testimonial.content}"</p>
+                <p className="quote">"{testimonial.content}"</p>
+                {renderStars(testimonial.rating)}
               </div>
               <div className="testimonial-author">
-                <img src={testimonial.avatar} alt={testimonial.name} className="avatar" />
+                <img 
+                  src={testimonial.avatar} 
+                  alt={testimonial.name} 
+                  className="avatar" 
+                  loading="lazy"
+                />
                 <div className="author-info">
                   <h4>{testimonial.name}</h4>
-                  <p>{testimonial.role}, {testimonial.company}</p>
+                  <p>{testimonial.role} • {testimonial.location}</p>
                 </div>
               </div>
             </div>
